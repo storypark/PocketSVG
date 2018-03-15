@@ -44,9 +44,13 @@
 {
     NSArray<SVGBezierPath*> *paths = [self.class._svg_pathCache objectForKey:aURL];
     if (!paths) {
-        paths =  [self pathsFromSVGString:[NSString stringWithContentsOfURL:aURL
-                                                               usedEncoding:NULL
-                                                                      error:NULL]];
+        NSString *svgContents = [NSString stringWithContentsOfURL:aURL
+                                                     usedEncoding:NULL
+                                                            error:NULL];
+        if (!svgContents || [@"" isEqualToString:svgContents]) {
+            return @[];
+        }
+        paths =  [self pathsFromSVGString:svgContents];
         if (paths) {
             [self.class._svg_pathCache setObject:paths forKey:aURL];
         }
