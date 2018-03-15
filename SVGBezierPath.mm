@@ -44,14 +44,11 @@
 {
     NSArray<SVGBezierPath*> *paths = [self.class._svg_pathCache objectForKey:aURL];
     if (!paths) {
-        NSString *svgContents = [NSString stringWithContentsOfURL:aURL
-                                                     usedEncoding:NULL
-                                                            error:NULL];
-        if (!svgContents || [@"" isEqualToString:svgContents]) {
-            return @[];
-        }
-        paths =  [self pathsFromSVGString:svgContents];
-        if (paths) {
+        paths =  [self pathsFromSVGString:[NSString stringWithContentsOfURL:aURL
+                                                               usedEncoding:NULL
+                                                                      error:NULL]];
+        // Do not cache empty paths
+        if (paths.count) {
             [self.class._svg_pathCache setObject:paths forKey:aURL];
         }
     }
@@ -60,6 +57,11 @@
 
 + (NSArray *)pathsFromSVGString:(NSString * const)svgString
 {
+    // Guard entry so that empty contents are not parsed
+    if (!svgString || [@"" isEqualToString:svgString]) {
+        return @[];
+    }
+    
     SVGAttributeSet *cgAttrs;
     NSArray        * const pathRefs = CGPathsFromSVGString(svgString, &cgAttrs);
     NSMutableArray * const paths    = [NSMutableArray arrayWithCapacity:pathRefs.count];
