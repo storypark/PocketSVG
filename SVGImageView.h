@@ -21,6 +21,17 @@ IB_DESIGNABLE
 @interface SVGImageView : PSVGView
 
 /*!
+ *  @brief Initialises a view that renders the provided SVG data.
+ *  @param svgSource The entire string of the XML document representing the SVG.
+ *  @code let url = NSBundle.mainBundle().URLForResource("svg_file_name", withExtension: "svg")!
+ let svgSource = try! NSString(contentsOfURL: url, encoding: NSUTF8StringEncoding) as String
+ let layer = SVGLayer(SVGSource: svgSource)
+ // set the layer's frame and add it as a sublayer to display it.
+ *
+ */
+- (instancetype)initWithSVGSource:(NSString *)svgSource;
+
+/*!
  * @brief Initialises a view that renders the provided SVG.
  * @param url The URL of the SVG file.
  * @code let url = NSBundle.mainBundle().URLForResource("svg_file_name", withExtension: "svg")!

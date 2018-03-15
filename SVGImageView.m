@@ -58,6 +58,13 @@
 }
 #endif
 
+- (instancetype)initWithSVGSource:(NSString *)svgSource {
+    if (self = [self init]) {
+        _svgLayer.paths = [SVGBezierPath pathsFromSVGString:svgSource];
+    }
+    return self;
+}
+
 - (instancetype)initWithContentsOfURL:(NSURL *)url {
     if (self = [self init]) {
         [self _cr_loadSVGFromURL:url];
