@@ -60,7 +60,7 @@
 
 - (instancetype)initWithSVGSource:(NSString *)svgSource {
     if (self = [self init]) {
-        _svgLayer.paths = [SVGBezierPath pathsFromSVGString:svgSource];
+        self.paths = [SVGBezierPath pathsFromSVGString:svgSource];
     }
     return self;
 }
@@ -178,6 +178,10 @@
 #endif
 }
 
+- (void)setSvgSource:(NSString *)svgSource
+{
+    self.paths = [SVGBezierPath pathsFromSVGString:svgSource];
+}
 
 - (PSVGColor *)fillColor { return _svgLayer.fillColor
                                   ? [PSVGColor colorWithCGColor:_svgLayer.fillColor]

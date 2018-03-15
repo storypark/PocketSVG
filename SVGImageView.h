@@ -40,6 +40,11 @@ IB_DESIGNABLE
  */
 - (instancetype)initWithContentsOfURL:(NSURL *)url;
 
+/*!
+ *  @brief Clears contents and renders a new SVG given its complete XML representation.
+ *  @param svgSource The entire string of the XML document representing the SVG.
+ */
+- (void)setSvgSource:(NSString *)svgSource;
 
 /*!
  * @discussion The SVG paths the view should draw.
